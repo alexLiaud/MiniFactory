@@ -1,6 +1,8 @@
 package com.alex.shapes;
 
-public abstract class Shape {
+import java.io.Serializable;
+
+public abstract class Shape implements Serializable {
     int glType;
     int posX = 0;
     int posY = 0;

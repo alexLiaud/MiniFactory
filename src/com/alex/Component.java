@@ -43,6 +43,7 @@ public class Component {
     }
 
     public void render() {
+        glClear(GL_COLOR_BUFFER_BIT);
         world.render(time);
     }
 
@@ -71,6 +72,7 @@ public class Component {
             tick();
             render();
         }
+        world.save();
         exit();
     }
 
