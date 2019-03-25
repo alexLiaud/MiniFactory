@@ -1,8 +1,12 @@
 package com.alex;
 
+import com.alex.shapes.Square;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.glu.GLU;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class Component {
     private static String title = "OctoSurvival";
@@ -18,6 +22,7 @@ public class Component {
             Display.setFullscreen(false);
             Display.setTitle(title);
             Display.create();
+            initGL();
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
@@ -36,6 +41,16 @@ public class Component {
         main.start();
     }
 
+    public void render() {
+        int x = 50, y = 50;
+
+        float[] color = {0f, 0.4f, 0.1f};
+        Square square = new Square(30, 20, color, 50);
+        Square square1 = new Square(30, 50, color, 70);
+        square.print();
+        square1.print();
+    }
+
     public void start() {
         running = true;
         loop();
@@ -50,10 +65,20 @@ public class Component {
             if (Display.isCloseRequested()) {
                 stop();
             }
-            System.out.println("Coucou");
+            widht = Display.getWidth();
+            height = Display.getHeight();
             Display.update();
+            render();
         }
         exit();
+    }
+
+    private void initGL() {
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        GLU.gluOrtho2D(0, widht, height, 0);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
     }
 
     public void exit() {
