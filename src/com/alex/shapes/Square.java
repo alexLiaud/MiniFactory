@@ -2,11 +2,18 @@ package com.alex.shapes;
 
 import java.util.Arrays;
 
+import static com.alex.shapes.Type.GRASS;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Square extends Shape {
-    float[] color = {0, 0, 0, 0};
-    int size = 50;
+    private float[] color = {0, 1, 0, 0};
+    private int size = 10;
+    private int type = GRASS;
+
+
+    public Square(int x, int y) {
+        super(GL_QUADS, x, y);
+    }
 
     public Square(int x, int y, float[] c, int size) {
         super(GL_QUADS, x, y);
@@ -14,6 +21,10 @@ public class Square extends Shape {
             this.color = c;
         }
         this.size = size;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public void print(int x, int y) {

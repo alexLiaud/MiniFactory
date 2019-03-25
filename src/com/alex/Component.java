@@ -1,5 +1,6 @@
 package com.alex;
 
+import com.alex.shapes.Square;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -10,8 +11,8 @@ import static org.lwjgl.opengl.GL11.*;
 public class Component {
     private static int time = 0;
     private static String title = "OctoSurvival";
-    private static int widht = 800;
-    private static int height = 400;
+    private static int widht = 1200;
+    private static int height = 800;
     private boolean running = false;
     private DisplayMode mode = new DisplayMode(widht, height);
     private World world;
@@ -19,7 +20,7 @@ public class Component {
     public Component() {
         try {
             Display.setDisplayMode(mode);
-            Display.setResizable(true);
+            Display.setResizable(false);
             Display.setFullscreen(false);
             Display.setTitle(title);
             Display.create();
@@ -44,7 +45,10 @@ public class Component {
 
     public void render() {
         glClear(GL_COLOR_BUFFER_BIT);
+        float[] couleur = {0.5f, 0.5f, 0, 0};
+        Square player = new Square(widht / 2 - 5, height / 2 - 5, couleur, 5);
         world.render(time);
+        player.print();
     }
 
     public void tick() {
