@@ -51,4 +51,10 @@ public class Square extends Shape {
                 ", posY=" + posY +
                 '}';
     }
+
+    public void setColor(float a, float b, float c) {
+        color[0] = a;
+        color[1] = b;
+        color[2] = c;
+    }
 }

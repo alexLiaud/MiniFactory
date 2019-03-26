@@ -58,11 +58,13 @@ public class Component {
     public void start() {
         running = true;
         world = new World();
+        world.load();
         loop();
     }
 
     public void stop() {
         running = false;
+        world.save();
     }
 
     public void loop() {

@@ -31,4 +31,7 @@ public abstract class Shape implements Serializable {
 
     public void print() {
     }
+
+    public void setColor(float v, int i, float v1) {
+    }
 }
