@@ -5,17 +5,17 @@ import java.util.Arrays;
 import static com.alex.shapes.Type.GRASS;
 import static org.lwjgl.opengl.GL11.*;
 
-public class Square extends Shape {
+public class Tile extends Shape {
     private float[] color = {0, 1, 0, 0};
     private int size = 10;
     private int type = GRASS;
 
 
-    public Square(int x, int y) {
+    public Tile(int x, int y) {
         super(GL_QUADS, x, y);
     }
 
-    public Square(int x, int y, float[] c, int size) {
+    public Tile(int x, int y, float[] c, int size) {
         super(GL_QUADS, x, y);
         if (color.length == 4) {
             this.color = c;
@@ -43,7 +43,7 @@ public class Square extends Shape {
 
     @Override
     public String toString() {
-        return "Square{" +
+        return "Tile{" +
                 "color=" + Arrays.toString(color) +
                 ", size=" + size +
                 ", glType=" + glType +

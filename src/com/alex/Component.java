@@ -1,6 +1,6 @@
 package com.alex;
 
-import com.alex.shapes.Square;
+import com.alex.shapes.Tile;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -16,15 +16,17 @@ public class Component {
     private boolean running = false;
     private DisplayMode mode = new DisplayMode(widht, height);
     private World world;
+    private boolean tick = false;
+    private boolean render = false;
 
     public Component() {
         try {
             Display.setDisplayMode(mode);
-            Display.setResizable(false);
+            Display.setResizable(true);
             Display.setFullscreen(false);
             Display.setTitle(title);
             Display.create();
-            initGL();
+            view2d(Display.getWidth(), Display.getHeight());
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
@@ -44,9 +46,11 @@ public class Component {
     }
 
     public void render() {
+        glViewport(0, 0, widht, height);
+        view2d(Display.getWidth(), Display.getHeight());
         glClear(GL_COLOR_BUFFER_BIT);
         float[] couleur = {0.5f, 0.5f, 0, 0};
-        Square player = new Square(widht / 2 - 5, height / 2 - 5, couleur, 5);
+        Tile player = new Tile(widht / 2 - 5, height / 2 - 5, couleur, 5);
         world.render(time);
         player.print();
     }
@@ -68,24 +72,58 @@ public class Component {
     }
 
     public void loop() {
+        long timer = System.currentTimeMillis();
+        int ticks = 0;
+        int frames = 0;
+
+        long before = System.nanoTime();
+        double elapsed = 0;
+        double nanoSeconds = 1000000000.0 / 60.0;
+
         while (running) {
+            tick = false;
+            render = false;
+
+            long now = System.nanoTime();
+
             if (Display.isCloseRequested()) {
                 stop();
             }
+
             widht = Display.getWidth();
             height = Display.getHeight();
+
+            elapsed = now - before;
+
+            if (elapsed > nanoSeconds) {
+                before += nanoSeconds;
+                tick = true;
+                ticks++;
+            } else {
+                render = true;
+                frames++;
+            }
+
+            if (System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+                Display.setTitle("Ticks: " + ticks + "  FPS:" + frames);
+                ticks = 0;
+                frames = 0;
+            }
+
             Display.update();
-            tick();
-            render();
+
+            if (tick) tick();
+            if (render) render();
         }
         world.save();
         exit();
     }
 
-    private void initGL() {
+    private void view2d(int w, int h) {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        GLU.gluOrtho2D(0, widht, height, 0);
+        GLU.gluOrtho2D(0, w, h, 0);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
     }

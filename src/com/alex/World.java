@@ -7,8 +7,8 @@ public class World implements Serializable {
     private static int nbCol = 6;
     private static int nbLig = 4;
 
-    private int playerX = 2;
-    private int playerY = 3;
+    private int playerX = 0;
+    private int playerY = 0;
     private ArrayList<Chunck> loadedChunck;
 
     public World() {
