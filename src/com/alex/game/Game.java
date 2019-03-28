@@ -35,4 +35,8 @@ public class Game {
         world.render(time, player);
         player.render(time);
     }
+
+    public void stop() {
+        world.save();
+    }
 }

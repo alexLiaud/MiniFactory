@@ -124,6 +124,7 @@ public class Component {
     }
 
     public void exit() {
+        game.stop();
         Display.destroy();
         System.exit(0);
     }

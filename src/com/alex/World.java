@@ -13,11 +13,13 @@ public class World implements Serializable {
     private int charge = 0;
     private int playerX = 0;
     private int playerY = 0;
+    private ArrayList<Chunck> oldLoadChunck;
     private ArrayList<Chunck> loadedChunck;
 
     public World() {
         float[] color = {0f, 0.4f, 0.1f};
         loadedChunck = new ArrayList<>();
+        oldLoadChunck = new ArrayList<>();
     }
 
     public void render(int time, Player p) {
@@ -27,14 +29,21 @@ public class World implements Serializable {
         }
     }
 
+    public void decharger(ArrayList<Chunck> liste) {
+        for (Chunck c : liste) {
+            if (!oldLoadChunck.contains(c)) {
+                oldLoadChunck.add(c);
+            }
+        }
+    }
+
     public void loadChunck(Player p) {
-        ArrayList<Chunck> oldLoadChunck = loadedChunck;
+        decharger(loadedChunck);
         loadedChunck = new ArrayList<>();
         for (int i = p.getPosXChunck() - viewRender; i <= p.getPosXChunck() + viewRender; i++) {
             for (int j = p.getPosYChunck() - viewRender; j <= p.getPosYChunck() + viewRender; j++) {
                 boolean load = true;
                 for (Chunck c : oldLoadChunck) {
-                    System.out.println(c + "!=" + new Chunck(playerY + i, playerY + j));
                     if (c.equals(new Chunck(playerY + i, playerY + j))) {
                         load = false;
                         loadedChunck.add(c);
@@ -64,7 +73,8 @@ public class World implements Serializable {
     }
 
     public void save() {
-        for (Chunck c : loadedChunck) {
+        decharger(loadedChunck);
+        for (Chunck c : oldLoadChunck) {
             c.save();
         }
     }
