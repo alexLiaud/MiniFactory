@@ -1,5 +1,6 @@
 package com.alex;
 
+import com.alex.game.Game;
 import com.alex.game.Player;
 
 import java.io.Serializable;
@@ -22,10 +23,10 @@ public class World implements Serializable {
         oldLoadChunck = new ArrayList<>();
     }
 
-    public void render(int time, Player p) {
+    public void render(int time, Player p, Game game) {
         loadChunck(p);
         for (Chunck c : loadedChunck) {
-            c.render(time, p);
+            c.render(time, p, game);
         }
     }
 

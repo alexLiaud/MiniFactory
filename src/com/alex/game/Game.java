@@ -25,14 +25,22 @@ public class Game {
     }
 
     public void update() {
-        translateView(0.1f, 0.1f);
+        translateView(0.5f, 0.5f);
         world.update();
+    }
+
+    public float getxScroll() {
+        return xScroll;
+    }
+
+    public float getyScroll() {
+        return yScroll;
     }
 
     public void render(int time) {
         System.out.println("render" + xScroll + "" + yScroll);
         GL11.glTranslatef(xScroll, yScroll, 0);
-        world.render(time, player);
+        world.render(time, player, this);
         player.render(time);
     }
 

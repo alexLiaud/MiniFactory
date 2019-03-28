@@ -1,5 +1,8 @@
 package com.alex.shapes;
 
+import com.alex.Component;
+import com.alex.game.Game;
+
 import java.util.Arrays;
 
 import static com.alex.shapes.Type.GRASS;
@@ -34,7 +37,14 @@ public class Tile extends Shape {
         return size;
     }
 
-    public void print(int x, int y) {
+    public void print(int x, int y, Game game) {
+        float x0 = x + game.getxScroll();
+        float y0 = y + game.getyScroll();
+        float x1 = x + getSize() + game.getxScroll();
+        float y1 = y + +getSize() + game.getyScroll();
+        if (x1 < 0 || y1 < 0 || x0 > Component.getWidht() || y0 > Component.getHeight()) {
+            return;
+        }
         glBegin(glType);
         glColor3f(color[0], color[1], color[2]);
         glVertex2f(x, y);
@@ -44,8 +54,8 @@ public class Tile extends Shape {
         glEnd();
     }
 
-    public void print() {
-        print(posX, posY);
+    public void print(Game game) {
+        print(posX, posY, game);
     }
 
     @Override

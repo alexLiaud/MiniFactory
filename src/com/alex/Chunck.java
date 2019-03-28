@@ -1,5 +1,6 @@
 package com.alex;
 
+import com.alex.game.Game;
 import com.alex.game.Player;
 import com.alex.shapes.Tile;
 import org.lwjgl.opengl.Display;
@@ -77,12 +78,12 @@ public class Chunck {
 
     }
 
-    public void render(int time, Player player) {
+    public void render(int time, Player player, Game game) {
         int middleY = Display.getHeight() / 2;
         int middleX = Display.getWidth() / 2;
         for (Tile[] ligne : map) {
             for (Tile tile : ligne) {
-                tile.print(tile.getPosX() + middleX - 8 * tile.getSize() + locX * tile.getSize() * map.length - player.getWidth() / 2, middleY - player.getHeight() / 2 - 8 * tile.getSize() + tile.getPosY() + locY * tile.getSize() * map[0].length);
+                tile.print(tile.getPosX() + middleX - 8 * tile.getSize() + locX * tile.getSize() * map.length - player.getWidth() / 2, middleY - player.getHeight() / 2 - 8 * tile.getSize() + tile.getPosY() + locY * tile.getSize() * map[0].length, game);
             }
         }
     }
