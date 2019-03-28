@@ -54,9 +54,9 @@ public class Player {
         this.posy = posy;
     }
 
-    public void render(int time) {
+    public void render(int time, Game game) {
         float[] couleur = {0.5f, 0.5f, 0, 0};
         Tile player = new Tile(Display.getWidth() / 2 - getWidth() / 2, Display.getHeight() / 2 - getHeight() / 2, couleur, 10);
-        player.print();
+        player.print(game);
     }
 }

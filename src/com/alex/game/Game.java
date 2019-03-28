@@ -41,7 +41,7 @@ public class Game {
         System.out.println("render" + xScroll + "" + yScroll);
         GL11.glTranslatef(xScroll, yScroll, 0);
         world.render(time, player, this);
-        player.render(time);
+        player.render(time, this);
     }
 
     public void stop() {

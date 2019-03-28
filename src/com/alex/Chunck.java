@@ -2,6 +2,7 @@ package com.alex;
 
 import com.alex.game.Game;
 import com.alex.game.Player;
+import com.alex.shapes.Grass;
 import com.alex.shapes.Tile;
 import org.lwjgl.opengl.Display;
 
@@ -19,7 +20,7 @@ public class Chunck {
         map = new Tile[16][16];
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
-                map[i][j] = new Tile(i * 60, j * 60);
+                map[i][j] = new Grass(i * 60, j * 60);
             }
         }
         loc = "./data/save_" + locX + "_" + locY + ".dat";

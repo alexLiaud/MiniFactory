@@ -3,23 +3,28 @@ package com.alex.shapes;
 import com.alex.Component;
 import com.alex.game.Game;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-import static com.alex.shapes.Type.GRASS;
 import static org.lwjgl.opengl.GL11.*;
 
-public class Tile extends Shape {
-    private float[] color = {0, 1, 0, 0};
-    private int size = 60;
-    private int type = GRASS;
-
+public class Tile implements Serializable {
+    protected float[] color = {0, 1, 0, 0};
+    protected int size = 60;
+    protected int glType;
+    protected int posX = 0;
+    protected int posY = 0;
 
     public Tile(int x, int y) {
-        super(GL_QUADS, x, y);
+        glType = GL_QUADS;
+        posX = x;
+        posY = y;
     }
 
     public Tile(int x, int y, float[] c, int size) {
-        super(GL_QUADS, x, y);
+        glType = GL_QUADS;
+        posX = x;
+        posY = y;
         if (color.length == 4) {
             this.color = c;
         }
@@ -27,10 +32,20 @@ public class Tile extends Shape {
     }
 
     public Tile(int x, int y, float[] c) {
-        super(GL_QUADS, x, y);
+        glType = GL_QUADS;
+        posX = x;
+        posY = y;
         if (color.length == 4) {
             this.color = c;
         }
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
     }
 
     public int getSize() {
