@@ -1,12 +1,16 @@
 package com.alex;
 
+import com.alex.game.Player;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class World implements Serializable {
     private static int nbCol = 6;
     private static int nbLig = 4;
+    private static int viewRender = 1;
 
+    private int charge = 0;
     private int playerX = 0;
     private int playerY = 0;
     private ArrayList<Chunck> loadedChunck;
@@ -16,26 +20,41 @@ public class World implements Serializable {
         loadedChunck = new ArrayList<>();
     }
 
-    public void render(int time) {
-        loadChunck();
+    public void render(int time, Player p) {
+        loadChunck(p);
         for (Chunck c : loadedChunck) {
-            c.render(time);
+            c.render(time, p);
         }
     }
 
-    public void loadChunck() {
+    public void loadChunck(Player p) {
+        ArrayList<Chunck> oldLoadChunck = loadedChunck;
         loadedChunck = new ArrayList<>();
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                loadedChunck.add(loadOneChunck(playerX + i, playerY + j));
+        for (int i = p.getPosXChunck() - viewRender; i <= p.getPosXChunck() + viewRender; i++) {
+            for (int j = p.getPosYChunck() - viewRender; j <= p.getPosYChunck() + viewRender; j++) {
+                boolean load = true;
+                for (Chunck c : oldLoadChunck) {
+                    System.out.println(c + "!=" + new Chunck(playerY + i, playerY + j));
+                    if (c.equals(new Chunck(playerY + i, playerY + j))) {
+                        load = false;
+                        loadedChunck.add(c);
+                    }
+                }
+                if (load) {
+                    loadedChunck.add(loadOneChunck(playerX + i, playerY + j));
+                }
             }
         }
     }
 
     public Chunck loadOneChunck(int x, int y) {
+        System.out.println(charge++);
         Chunck res = new Chunck(x, y);
         res.load();
         return res;
+    }
+
+    public void update() {
     }
 
     public void load() {

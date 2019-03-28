@@ -1,6 +1,6 @@
 package com.alex;
 
-import com.alex.shapes.Tile;
+import com.alex.game.Game;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -10,12 +10,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Component {
     private static int time = 0;
-    private static String title = "OctoSurvival";
+    private static String title = "MiniFactory";
     private static int widht = 1200;
     private static int height = 800;
     private boolean running = false;
     private DisplayMode mode = new DisplayMode(widht, height);
-    private World world;
+    private Game game;
     private boolean tick = false;
     private boolean render = false;
 
@@ -49,26 +49,22 @@ public class Component {
         glViewport(0, 0, widht, height);
         view2d(Display.getWidth(), Display.getHeight());
         glClear(GL_COLOR_BUFFER_BIT);
-        float[] couleur = {0.5f, 0.5f, 0, 0};
-        Tile player = new Tile(widht / 2 - 5, height / 2 - 5, couleur, 5);
-        world.render(time);
-        player.print();
+        game.render(time);
     }
 
     public void tick() {
+        game.update();
         time++;
     }
 
     public void start() {
         running = true;
-        world = new World();
-        world.load();
+        game = new Game();
         loop();
     }
 
     public void stop() {
         running = false;
-        world.save();
     }
 
     public void loop() {
@@ -106,7 +102,7 @@ public class Component {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                Display.setTitle("Ticks: " + ticks + "  FPS:" + frames);
+                Display.setTitle(title + " | Ticks: " + ticks + "  FPS:" + frames);
                 ticks = 0;
                 frames = 0;
             }
@@ -116,7 +112,6 @@ public class Component {
             if (tick) tick();
             if (render) render();
         }
-        world.save();
         exit();
     }
 

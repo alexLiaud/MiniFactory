@@ -1,6 +1,8 @@
 package com.alex;
 
+import com.alex.game.Player;
 import com.alex.shapes.Tile;
+import org.lwjgl.opengl.Display;
 
 import java.io.*;
 
@@ -16,10 +18,25 @@ public class Chunck {
         map = new Tile[16][16];
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
-                map[i][j] = new Tile(i * 10, j * 10);
+                map[i][j] = new Tile(i * 60, j * 60);
             }
         }
         loc = "./data/save_" + locX + "_" + locY + ".dat";
+    }
+
+    @Override
+    public String toString() {
+        return "Chunck{" +
+                "loc='" + loc + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Chunck)) return false;
+        Chunck chunck = (Chunck) o;
+        return loc.equals(chunck.loc);
     }
 
     public void soutChunck() {
@@ -36,7 +53,12 @@ public class Chunck {
         ObjectOutputStream oos = null;
         try {
             float[] c = {0.3f, 0f, 0f, 0};
-            map[5][5] = new Tile(map[5][5].getPosX(), map[5][5].getPosY(), c, 10);
+            for (int i = 0; i < 16; i++) {
+                map[0][i] = new Tile(0, 0, c);
+                map[15][i] = new Tile(0, 0, c);
+                map[i][0] = new Tile(0, 0, c);
+                map[i][15] = new Tile(0, 0, c);
+            }
             final FileOutputStream fichier = new FileOutputStream(loc);
             oos = new ObjectOutputStream(fichier);
             oos.writeObject(this.map);
@@ -55,10 +77,12 @@ public class Chunck {
 
     }
 
-    public void render(int time) {
+    public void render(int time, Player player) {
+        int middleY = Display.getHeight() / 2;
+        int middleX = Display.getWidth() / 2;
         for (Tile[] ligne : map) {
             for (Tile tile : ligne) {
-                tile.print(tile.getPosX() + locX * tile.getSize() * map.length, tile.getPosY() + locY * tile.getSize() * map[0].length);
+                tile.print(tile.getPosX() + middleX - 8 * tile.getSize() + locX * tile.getSize() * map.length - player.getWidth() / 2, middleY - player.getHeight() / 2 - 8 * tile.getSize() + tile.getPosY() + locY * tile.getSize() * map[0].length);
             }
         }
     }
