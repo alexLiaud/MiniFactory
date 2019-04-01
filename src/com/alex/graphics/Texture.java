@@ -13,17 +13,11 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 public class Texture {
     private int width, height;
     private int id;
-    private static Texture tiles = Texture.loadTexture("/sand.png");
-
 
     public Texture(int width, int height, int id) {
         this.width = width;
         this.height = height;
         this.id = id;
-    }
-
-    public static Texture getTiles() {
-        return tiles;
     }
 
     public static Texture loadTexture(String path) {

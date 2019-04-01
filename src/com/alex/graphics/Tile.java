@@ -2,19 +2,22 @@ package com.alex.graphics;
 
 import com.alex.Component;
 import com.alex.game.Game;
+import com.alex.textureMap;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
 
 public class Tile implements Serializable {
 
-    protected float[] color = {0, 1, 0, 0};
     protected int size = 60;
     protected int glType;
     protected int posX = 0;
     protected int posY = 0;
+    protected int posXSheet = 0;
+    protected int posYSheet = 0;
+    protected float nb = 1f;
+    protected String type = "void";
 
     public Tile(int x, int y) {
         glType = GL_QUADS;
@@ -22,23 +25,11 @@ public class Tile implements Serializable {
         posY = y;
     }
 
-    public Tile(int x, int y, float[] c, int size) {
+    public Tile(int x, int y, int size) {
         glType = GL_QUADS;
         posX = x;
         posY = y;
-        if (color.length == 4) {
-            this.color = c;
-        }
         this.size = size;
-    }
-
-    public Tile(int x, int y, float[] c) {
-        glType = GL_QUADS;
-        posX = x;
-        posY = y;
-        if (color.length == 4) {
-            this.color = c;
-        }
     }
 
     public int getPosX() {
@@ -62,7 +53,6 @@ public class Tile implements Serializable {
             return;
         }
         glBegin(glType);
-        glColor3f(color[0], color[1], color[2]);
         glVertex2f(x, y);
         glVertex2f(x, y + size);
         glVertex2f(x + size, y + size);
@@ -79,34 +69,31 @@ public class Tile implements Serializable {
     }
 
     public void printTexture(int x, int y, Game game) {
-        Texture.getTiles().bind();
+        if (!textureMap.getInstance().isLoaded(type)) {
+            textureMap.getInstance().loadTextureInMap(type);
+        }
+
+        textureMap.getTiles(type).bind();
         glBegin(GL_QUADS);
-        glTexCoord2f(0, 0);
+        glTexCoord2f(posXSheet / nb, posYSheet / nb);
         glVertex2f(x, y);
-        glTexCoord2f(1, 0);
+        glTexCoord2f((1 + posXSheet) / nb, posYSheet / nb);
         glVertex2f(x, y + size);
-        glTexCoord2f(1, 1);
+        glTexCoord2f((1 + posXSheet) / nb, (1 + posYSheet) / nb);
         glVertex2f(x + size, y + size);
-        glTexCoord2f(0, 1);
+        glTexCoord2f(posXSheet / nb, (1 + posYSheet) / nb);
         glVertex2f(x + size, y);
         glEnd();
-        Texture.getTiles().unbind();
+        textureMap.getTiles(type).unbind();
     }
 
     @Override
     public String toString() {
         return "Tile{" +
-                "color=" + Arrays.toString(color) +
                 ", size=" + size +
                 ", glType=" + glType +
                 ", posX=" + posX +
                 ", posY=" + posY +
                 '}';
-    }
-
-    public void setColor(float a, float b, float c) {
-        color[0] = a;
-        color[1] = b;
-        color[2] = c;
     }
 }

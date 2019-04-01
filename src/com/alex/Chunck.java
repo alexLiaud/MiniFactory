@@ -3,6 +3,7 @@ package com.alex;
 import com.alex.game.Game;
 import com.alex.game.Player;
 import com.alex.graphics.Grass;
+import com.alex.graphics.Sand;
 import com.alex.graphics.Tile;
 import org.lwjgl.opengl.Display;
 
@@ -15,13 +16,18 @@ public class Chunck {
     private String loc = "./data/save_" + locX + "_" + locY + ".dat";
 
     public Chunck(int x, int y) {
+        int random;
         locY = y;
         locX = x;
         map = new Tile[16][16];
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
-                map[i][j] = new Grass(i * 60, j * 60);
+                map[i][j] = new Sand(i * 60, j * 60);
             }
+            map[15][i] = new Grass(15 * 60, i * 60);
+            map[0][i] = new Grass(0, i * 60);
+            map[i][0] = new Grass(i * 60, 0);
+            map[i][15] = new Grass(i * 60, 15 * 60);
         }
         loc = "./data/save_" + locX + "_" + locY + ".dat";
     }
