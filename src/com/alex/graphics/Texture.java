@@ -1,10 +1,9 @@
-package com.alex.shapes;
+package com.alex.graphics;
 
 import org.lwjgl.BufferUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -14,6 +13,8 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 public class Texture {
     private int width, height;
     private int id;
+    private static Texture tiles = Texture.loadTexture("/sand.png");
+
 
     public Texture(int width, int height, int id) {
         this.width = width;
@@ -21,10 +22,15 @@ public class Texture {
         this.id = id;
     }
 
+    public static Texture getTiles() {
+        return tiles;
+    }
+
     public static Texture loadTexture(String path) {
         BufferedImage image = null;
+        System.out.println(path);
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(Texture.class.getResource(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package com.alex.shapes;
+package com.alex.graphics;
 
 public class Type {
     public static final int GRASS = 1;

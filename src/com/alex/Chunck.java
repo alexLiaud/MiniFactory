@@ -2,8 +2,8 @@ package com.alex;
 
 import com.alex.game.Game;
 import com.alex.game.Player;
-import com.alex.shapes.Grass;
-import com.alex.shapes.Tile;
+import com.alex.graphics.Grass;
+import com.alex.graphics.Tile;
 import org.lwjgl.opengl.Display;
 
 import java.io.*;
@@ -51,16 +51,9 @@ public class Chunck {
     }
 
     public void save() {
-        System.out.println(loc);
         ObjectOutputStream oos = null;
         try {
             float[] c = {0.3f, 0f, 0f, 0};
-            for (int i = 0; i < 16; i++) {
-                map[0][i] = new Tile(0, 0, c);
-                map[15][i] = new Tile(0, 0, c);
-                map[i][0] = new Tile(0, 0, c);
-                map[i][15] = new Tile(0, 0, c);
-            }
             final FileOutputStream fichier = new FileOutputStream(loc);
             oos = new ObjectOutputStream(fichier);
             oos.writeObject(this.map);
@@ -84,7 +77,7 @@ public class Chunck {
         int middleX = Display.getWidth() / 2;
         for (Tile[] ligne : map) {
             for (Tile tile : ligne) {
-                tile.print(tile.getPosX() + middleX - 8 * tile.getSize() + locX * tile.getSize() * map.length - player.getWidth() / 2, middleY - player.getHeight() / 2 - 8 * tile.getSize() + tile.getPosY() + locY * tile.getSize() * map[0].length, game);
+                tile.printTexture(tile.getPosX() + middleX - 8 * tile.getSize() + locX * tile.getSize() * map.length - player.getWidth() / 2, middleY - player.getHeight() / 2 - 8 * tile.getSize() + tile.getPosY() + locY * tile.getSize() * map[0].length, game);
             }
         }
     }

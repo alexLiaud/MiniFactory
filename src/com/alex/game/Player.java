@@ -1,6 +1,6 @@
 package com.alex.game;
 
-import com.alex.shapes.Tile;
+import com.alex.graphics.Tile;
 import org.lwjgl.opengl.Display;
 
 public class Player {

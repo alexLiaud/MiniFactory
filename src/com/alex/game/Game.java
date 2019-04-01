@@ -38,7 +38,6 @@ public class Game {
     }
 
     public void render(int time) {
-        System.out.println("render" + xScroll + "" + yScroll);
         GL11.glTranslatef(xScroll, yScroll, 0);
         world.render(time, player, this);
         player.render(time, this);

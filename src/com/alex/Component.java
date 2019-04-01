@@ -121,6 +121,7 @@ public class Component {
         GLU.gluOrtho2D(0, w, h, 0);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+        glEnable(GL_TEXTURE_2D);
     }
 
     public void exit() {

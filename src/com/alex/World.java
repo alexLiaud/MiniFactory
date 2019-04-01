@@ -58,7 +58,6 @@ public class World implements Serializable {
     }
 
     public Chunck loadOneChunck(int x, int y) {
-        System.out.println(charge++);
         Chunck res = new Chunck(x, y);
         res.load();
         return res;

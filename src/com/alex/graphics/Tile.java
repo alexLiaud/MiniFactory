@@ -1,4 +1,4 @@
-package com.alex.shapes;
+package com.alex.graphics;
 
 import com.alex.Component;
 import com.alex.game.Game;
@@ -9,6 +9,7 @@ import java.util.Arrays;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Tile implements Serializable {
+
     protected float[] color = {0, 1, 0, 0};
     protected int size = 60;
     protected int glType;
@@ -63,14 +64,33 @@ public class Tile implements Serializable {
         glBegin(glType);
         glColor3f(color[0], color[1], color[2]);
         glVertex2f(x, y);
-        glVertex2d(x, y + size);
-        glVertex2d(x + size, y + size);
-        glVertex2d(x + size, y);
+        glVertex2f(x, y + size);
+        glVertex2f(x + size, y + size);
+        glVertex2f(x + size, y);
         glEnd();
     }
 
     public void print(Game game) {
         print(posX, posY, game);
+    }
+
+    public void printTexture(Game game) {
+        printTexture(posX, posY, game);
+    }
+
+    public void printTexture(int x, int y, Game game) {
+        Texture.getTiles().bind();
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0);
+        glVertex2f(x, y);
+        glTexCoord2f(1, 0);
+        glVertex2f(x, y + size);
+        glTexCoord2f(1, 1);
+        glVertex2f(x + size, y + size);
+        glTexCoord2f(0, 1);
+        glVertex2f(x + size, y);
+        glEnd();
+        Texture.getTiles().unbind();
     }
 
     @Override
