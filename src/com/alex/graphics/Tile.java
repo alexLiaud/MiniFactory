@@ -10,21 +10,36 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Tile implements Serializable {
 
-    public int[] tileSprite = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
+    public int[] tileSprite = new int[8];
     protected int size = 100;
     protected int glType;
     protected int posX = 0;
     protected int posY = 0;
     protected int posXSheet = 0;
     protected int posYSheet = 0;
-    protected float nb = 3f;
+    protected float nb;
     protected String type = "void";
+    protected boolean isBase = false;
 
     public Tile(int x, int y, int size) {
         glType = GL_QUADS;
         posX = x;
         posY = y;
         this.size = size;
+        isBase = false;
+        nb = 3;
+        tileSprite = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
+    }
+
+    public boolean isBase() {
+        return isBase;
+    }
+
+    public void setTiles(boolean vu, boolean vd, boolean vl, boolean vr, boolean vur, boolean vul, boolean vdl, boolean vdr) {
+        if (isBase) {
+            return;
+        }
+        System.out.println("Tile set");
     }
 
     public int getPosX() {
@@ -85,8 +100,8 @@ public class Tile implements Serializable {
         glTexCoord2f(posXSheet / nb, (1 + posYSheet) / nb);
         glVertex2f(x + size, y);
 
-        posXSheet -= +tileSprite[0];
-        posYSheet -= +tileSprite[1];
+        posXSheet -= tileSprite[0];
+        posYSheet -= tileSprite[1];
         posXSheet += tileSprite[2];
         posYSheet += tileSprite[3];
 
@@ -101,8 +116,8 @@ public class Tile implements Serializable {
         glTexCoord2f(posXSheet / nb, (1 + posYSheet) / nb);
         glVertex2f(x + size, y);
 
-        posXSheet -= +tileSprite[2];
-        posYSheet -= +tileSprite[3];
+        posXSheet -= tileSprite[2];
+        posYSheet -= tileSprite[3];
         posXSheet += tileSprite[4];
         posYSheet += tileSprite[5];
 

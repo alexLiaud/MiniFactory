@@ -37,6 +37,7 @@ public class TextureMap {
                 tiles = Texture.loadTexture("/" + str + ".png");
             }
         } catch (Exception e) {
+            System.out.println("Chargement de " + str + " impossible");
             tiles = textures.get("null");
         }
         textures.put(str, tiles);
