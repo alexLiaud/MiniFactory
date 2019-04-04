@@ -4,12 +4,12 @@ import com.alex.graphics.Tile;
 import org.lwjgl.opengl.Display;
 
 public class Player {
-    private int posX = 0;
-    private int posy = 0;
     private int posXChunck = 0;
     private int posYChunck = 0;
-    private int width = 10;
-    private int height = 5;
+    private int width = 40;
+    private int height = 40;
+    private int posX = 0 + width / 2;
+    private int posy = 0 + height / 2;
 
     public Player() {
     }
@@ -55,7 +55,7 @@ public class Player {
     }
 
     public void render(int time, Game game) {
-        Tile player = new Tile(Display.getWidth() / 2 - getWidth() / 2, Display.getHeight() / 2 - getHeight() / 2, 10);
+        Tile player = new Tile(Display.getWidth() / 2 - getWidth() / 2, Display.getHeight() / 2 - getHeight() / 2, 40);
         player.print(game);
     }
 }

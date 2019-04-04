@@ -4,17 +4,17 @@ import com.alex.graphics.Texture;
 
 import java.util.HashMap;
 
-public class textureMap {
+public class TextureMap {
     protected static HashMap<String, Texture> textures;
-    private static textureMap ourInstance = new textureMap();
+    private static TextureMap ourInstance = new TextureMap();
 
-    private textureMap() {
+    private TextureMap() {
         textures = new HashMap<>();
         Texture tiles = Texture.loadTexture("/null.png");
         textures.put("null", tiles);
     }
 
-    public static textureMap getInstance() {
+    public static TextureMap getInstance() {
         return ourInstance;
     }
 

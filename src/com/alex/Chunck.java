@@ -10,24 +10,26 @@ import org.lwjgl.opengl.Display;
 import java.io.*;
 
 public class Chunck {
+    private int tileSize = 60;
     private Tile[][] map;
     private int locX = 0;
     private int locY = 0;
-    private String loc = "./data/save_" + locX + "_" + locY + ".dat";
+    private String loc;
 
     public Chunck(int x, int y) {
         int random;
         locY = y;
         locX = x;
         map = new Tile[16][16];
+
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
-                map[i][j] = new Sand(i * 60, j * 60);
+                if (Math.random() > 0.5) {
+                    map[i][j] = new Sand(i * tileSize, j * tileSize, tileSize);
+                } else {
+                    map[i][j] = new Grass(i * tileSize, j * tileSize, tileSize);
+                }
             }
-            map[15][i] = new Grass(15 * 60, i * 60);
-            map[0][i] = new Grass(0, i * 60);
-            map[i][0] = new Grass(i * 60, 0);
-            map[i][15] = new Grass(i * 60, 15 * 60);
         }
         loc = "./data/save_" + locX + "_" + locY + ".dat";
     }
@@ -83,7 +85,7 @@ public class Chunck {
         int middleX = Display.getWidth() / 2;
         for (Tile[] ligne : map) {
             for (Tile tile : ligne) {
-                tile.printTexture(tile.getPosX() + middleX - 8 * tile.getSize() + locX * tile.getSize() * map.length - player.getWidth() / 2, middleY - player.getHeight() / 2 - 8 * tile.getSize() + tile.getPosY() + locY * tile.getSize() * map[0].length, game);
+                tile.printTexture(tile.getPosX() + middleX - 8 * tile.getSize() + locX * tile.getSize() * map.length, middleY - 8 * tile.getSize() + tile.getPosY() + locY * tile.getSize() * map[0].length, game);
             }
         }
     }

@@ -1,8 +1,8 @@
 package com.alex.graphics;
 
 import com.alex.Component;
+import com.alex.TextureMap;
 import com.alex.game.Game;
-import com.alex.textureMap;
 
 import java.io.Serializable;
 
@@ -10,20 +10,15 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Tile implements Serializable {
 
-    protected int size = 60;
+    public int[] tileSprite = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
+    protected int size = 100;
     protected int glType;
     protected int posX = 0;
     protected int posY = 0;
     protected int posXSheet = 0;
     protected int posYSheet = 0;
-    protected float nb = 1f;
+    protected float nb = 3f;
     protected String type = "void";
-
-    public Tile(int x, int y) {
-        glType = GL_QUADS;
-        posX = x;
-        posY = y;
-    }
 
     public Tile(int x, int y, int size) {
         glType = GL_QUADS;
@@ -69,11 +64,17 @@ public class Tile implements Serializable {
     }
 
     public void printTexture(int x, int y, Game game) {
-        if (!textureMap.getInstance().isLoaded(type)) {
-            textureMap.getInstance().loadTextureInMap(type);
+        if (!TextureMap.getInstance().isLoaded(type)) {
+            TextureMap.getInstance().loadTextureInMap(type);
         }
 
-        textureMap.getTiles(type).bind();
+        int size;
+        size = this.size / 2;
+
+        posXSheet += tileSprite[0];
+        posYSheet += tileSprite[1];
+
+        TextureMap.getTiles(type).bind();
         glBegin(GL_QUADS);
         glTexCoord2f(posXSheet / nb, posYSheet / nb);
         glVertex2f(x, y);
@@ -83,8 +84,63 @@ public class Tile implements Serializable {
         glVertex2f(x + size, y + size);
         glTexCoord2f(posXSheet / nb, (1 + posYSheet) / nb);
         glVertex2f(x + size, y);
+
+        posXSheet -= +tileSprite[0];
+        posYSheet -= +tileSprite[1];
+        posXSheet += tileSprite[2];
+        posYSheet += tileSprite[3];
+
+        x += size;
+
+        glTexCoord2f(posXSheet / nb, posYSheet / nb);
+        glVertex2f(x, y);
+        glTexCoord2f((1 + posXSheet) / nb, posYSheet / nb);
+        glVertex2f(x, y + size);
+        glTexCoord2f((1 + posXSheet) / nb, (1 + posYSheet) / nb);
+        glVertex2f(x + size, y + size);
+        glTexCoord2f(posXSheet / nb, (1 + posYSheet) / nb);
+        glVertex2f(x + size, y);
+
+        posXSheet -= +tileSprite[2];
+        posYSheet -= +tileSprite[3];
+        posXSheet += tileSprite[4];
+        posYSheet += tileSprite[5];
+
+        y += size;
+
+        glTexCoord2f(posXSheet / nb, posYSheet / nb);
+        glVertex2f(x, y);
+        glTexCoord2f((1 + posXSheet) / nb, posYSheet / nb);
+        glVertex2f(x, y + size);
+        glTexCoord2f((1 + posXSheet) / nb, (1 + posYSheet) / nb);
+        glVertex2f(x + size, y + size);
+        glTexCoord2f(posXSheet / nb, (1 + posYSheet) / nb);
+        glVertex2f(x + size, y);
+
+        posXSheet -= +tileSprite[4];
+        posYSheet -= +tileSprite[5];
+        posXSheet += tileSprite[6];
+        posYSheet += tileSprite[7];
+
+        x -= size;
+
+        glTexCoord2f(posXSheet / nb, posYSheet / nb);
+        glVertex2f(x, y);
+        glTexCoord2f((1 + posXSheet) / nb, posYSheet / nb);
+        glVertex2f(x, y + size);
+        glTexCoord2f((1 + posXSheet) / nb, (1 + posYSheet) / nb);
+        glVertex2f(x + size, y + size);
+        glTexCoord2f(posXSheet / nb, (1 + posYSheet) / nb);
+        glVertex2f(x + size, y);
         glEnd();
-        textureMap.getTiles(type).unbind();
+        TextureMap.getTiles(type).unbind();
+
+        posXSheet -= +tileSprite[6];
+        posYSheet -= +tileSprite[7];
+    }
+
+    public String getType() {
+        return type;
     }
 
     @Override

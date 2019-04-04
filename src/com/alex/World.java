@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class World implements Serializable {
     private static int nbCol = 6;
     private static int nbLig = 4;
-    private static int viewRender = 1;
+    private static int viewRender = 0;
 
     private int charge = 0;
     private int playerX = 0;
